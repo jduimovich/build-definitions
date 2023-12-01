@@ -1,0 +1,49 @@
+---
+- op: replace
+  path: /metadata/name
+  value: docker-build
+- op: replace
+  path: /metadata/labels
+  value:
+    "pipelines.openshift.io/used-by": "build-cloud"
+    "pipelines.openshift.io/runtime": "generic"
+    "pipelines.openshift.io/strategy": "docker"
+- op: replace
+  path: /spec/tasks/3/taskRef
+  value:
+    name: buildah
+    version: "0.1"
+- op: add
+  path: /spec/tasks/3/params
+  value:
+  - name: IMAGE
+    value: $(params.output-image)
+  - name: DOCKERFILE
+    value: $(params.dockerfile)
+  - name: CONTEXT
+    value: $(params.path-context)
+  - name: HERMETIC
+    value: "$(params.hermetic)"
+  - name: PREFETCH_INPUT
+    value: "$(params.prefetch-input)"
+  - name: IMAGE_EXPIRES_AFTER
+    value: "$(params.image-expires-after)"
+  - name: COMMIT_SHA
+    value: "$(tasks.clone-repository.results.commit)"
+- op: add
+  path: /spec/results/-
+  value:
+    name: JAVA_COMMUNITY_DEPENDENCIES
+    value: $(tasks.build-container.results.JAVA_COMMUNITY_DEPENDENCIES)
+# Remove tasks that assume a binary image
+- op: replace
+  path: /spec/tasks/3/runAfter/0
+  value: clone-repository
+- op: remove 
+  path: /spec/tasks/8  # 
+- op: remove 
+  path: /spec/tasks/7  #   
+- op: remove
+  path: /spec/tasks/5  #  
+- op: remove
+  path: /spec/tasks/2  #  
