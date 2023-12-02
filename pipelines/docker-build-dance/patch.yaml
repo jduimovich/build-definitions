@@ -1,7 +1,7 @@
 ---
 - op: replace
   path: /metadata/name
-  value: docker-build
+  value: docker-build-dance
 - op: replace
   path: /metadata/labels
   value:
