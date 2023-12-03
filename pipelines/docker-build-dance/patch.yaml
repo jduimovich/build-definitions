@@ -37,8 +37,7 @@
   value:
     name: git-owner
     type: string
-    default: "git-owner-not-configured"
-    default: "common-password-secret-not-configured"
+    default: "git-owner-not-configured" 
 - op: add
   path: /spec/params/-
   value:
