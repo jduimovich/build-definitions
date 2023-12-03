@@ -1,0 +1,36 @@
+ # parameters from the Burr Spring Demo to be included for the new tasks to run.
+ 
+  - name: sonarqube-host-url
+    type: string
+    default: "sonarqube-host-url-not-configured"
+  - name: sonarqube-project-key
+    type: string
+    default: "sonarqube-project-key-not-configured"
+  - name: sonarqube-project-secret
+    type: string
+    default: "sonarqube-project-secret-not-configured"
+  - name: cyclonedx-host-url
+    type: string
+    default: "cyclonedx-host-url-not-configured"
+  - name: stackrox-endpoint
+    type: string
+    vadefaultlue: "stackrox-endpoint-not-configured"
+  - name: stackrox-secret
+    type: string
+    default: "stackrox-secret-not-configured"
+  - name: git-host
+    type: string
+    default: "git-host-not-configured"
+  - name: git-owner
+    type: string
+    default: "git-owner-not-configured"
+  - name: component-id
+    type: string
+    default: "component-id-not-configured"
+  - name: common-password-secret
+    type: string
+    default: "common-password-secret-not-configured"
+  - name: rekor-url
+    type: string
+    default: "rekor-url-not-configured"
+ 
