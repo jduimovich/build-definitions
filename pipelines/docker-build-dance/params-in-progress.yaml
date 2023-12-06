@@ -18,18 +18,6 @@
   - name: stackrox-secret
     type: string
     default: "stackrox-secret-not-configured"
-  - name: git-host
-    type: string
-    default: "git-host-not-configured"
-  - name: git-owner
-    type: string
-    default: "git-owner-not-configured"
-  - name: component-id
-    type: string
-    default: "component-id-not-configured"
-  - name: common-password-secret
-    type: string
-    default: "common-password-secret-not-configured"
   - name: rekor-url
     type: string
     default: "rekor-url-not-configured"

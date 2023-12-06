@@ -20,30 +20,6 @@
     name: stackrox-secret
     type: string
     default: "stackrox-secret-not-configured"
-- op: add
-  path: /spec/params/-
-  value:
-    name: component-id
-    type: string
-    default: "component-id-not-configured"
-- op: add
-  path: /spec/params/-
-  value:
-    name: common-password-secret
-    type: string
-    default: "common-password-secret-not-configured"
-- op: add
-  path: /spec/params/-
-  value:
-    name: git-owner
-    type: string
-    default: "git-owner-not-configured" 
-- op: add
-  path: /spec/params/-
-  value:
-    name: git-host
-    type: string
-    default: "git-host-not-configured"
 - op: replace
   path: /spec/tasks/3/taskRef
   value:
