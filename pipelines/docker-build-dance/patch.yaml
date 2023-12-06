@@ -13,7 +13,7 @@
   value:
     name: stackrox-endpoint
     type: string
-    default: "stackrox-endpoint-not-configured" 
+    default: "central.rhacs-operator.svc.cluster.local:443"
 - op: add
   path: /spec/params/-
   value:
@@ -71,7 +71,7 @@
   value:
     name: JAVA_COMMUNITY_DEPENDENCIES
     value: $(tasks.build-container.results.JAVA_COMMUNITY_DEPENDENCIES)
-# Remove tasks that assume a binary image
+# Remove tasks 
 # Example - yq .spec.tasks.[].name ../build-definitions/pipelines/template-build/template-build.yaml | nl -v 0 
 # to compute offsets
 #      0  init
@@ -148,14 +148,6 @@
       value: $(params.stackrox-endpoint)
     - name: rox_api_token
       value: $(params.stackrox-secret)
-    - name: git_host
-      value: $(params.git-host)
-    - name: git_owner
-      value: $(params.git-owner)
-    - name: component_id
-      value: $(params.component-id)
-    - name: common_password_secret
-      value: $(params.common-password-secret)
     - name: insecure-skip-tls-verify
       value: "true"
     runAfter:
