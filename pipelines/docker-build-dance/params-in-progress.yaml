@@ -14,10 +14,10 @@
     default: "cyclonedx-host-url-not-configured"
   - name: stackrox-endpoint
     type: string
-    vadefaultlue: "stackrox-endpoint-not-configured"
+    default: "stackrox-endpoint-not-configured"
   - name: stackrox-secret
     type: string
-    default: "stackrox-secret-not-configured"
+    default: "rox-api-token"
   - name: rekor-url
     type: string
     default: "rekor-url-not-configured"

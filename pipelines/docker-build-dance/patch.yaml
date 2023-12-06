@@ -19,7 +19,7 @@
   value:
     name: stackrox-secret
     type: string
-    default: "stackrox-secret-not-configured"
+    default: "rox-api-token"
 - op: replace
   path: /spec/tasks/3/taskRef
   value:
