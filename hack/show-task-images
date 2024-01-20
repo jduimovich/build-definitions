@@ -1,0 +1,49 @@
+#!/bin/bash -e 
+# Show the images in BD in tasks
+
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )" 
+TASKSDIR=${SCRIPTDIR}/../task
+
+function cutTag() { 
+    echo $1 | cut -d '@' -f 1  
+}
+
+PARAM_WITHIMAGES="BUILDER_IMAGE GIT_IMAGE SCRIPT_IMAGE IMAGE"
+function showTask() { 
+    NM=$(yq .metadata.name $1)
+    IMAGE_REFS=$(mktemp)
+    yq .spec.steps[].image $1 | cut -d '@' -f 1  > $IMAGE_REFS
+    for tag in $PARAM_WITHIMAGES 
+    do  
+        IMAGE=$(yq '.spec.params.[] | select(.name == "'$tag'").default' $1)  
+        if [ "$IMAGE" != "" ] && [ "$IMAGE" != "null" ]; then
+            NO_SHA=$(echo $IMAGE | cut -d '@' -f 1 ) 
+            echo "$NO_SHA" >> $IMAGE_REFS
+        fi
+        tmp=$(mktemp)
+        grep -v "params.$tag" $IMAGE_REFS > $tmp
+        mv $tmp $IMAGE_REFS
+    done 
+    # grep -v BUILDER_IMAGE $IMAGE_REFS |  sort | uniq | xargs -n 1  printf "\t %s\n"
+ 
+
+    OWNER=Unknown
+    FORMAT="| %s | $NM | $OWNER | \n" 
+    cat $IMAGE_REFS |  sort | uniq | xargs -n 1 printf "$FORMAT"
+
+}
+echo "# Image and Owners "
+printf "|  Image | Task  | Owner  |\n" 
+printf "| -------- | ------- | ------- |\n"     
+for task in $(ls $TASKSDIR); do
+  VERSIONDIR=$(ls -d $TASKSDIR/$task/*/ | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | tail -n1)
+  if [ -f $VERSIONDIR/$task.yaml ]; then
+    showTask $VERSIONDIR/$task.yaml  
+  elif [ -f $VERSIONDIR/kustomization.yaml ]; then
+    T=$(mktemp)
+    kustomize build $VERSIONDIR > $T 
+    showTask $T  
+  else
+    echo Unable to apply task in $VERSIONDIR
+  fi
+done  
