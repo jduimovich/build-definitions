@@ -80,6 +80,9 @@
       - build-container
     taskRef:
       name: acs-image-check
+    workspaces:
+      - name: repository
+        workspace: workspace
 - op: add
   path: /spec/tasks/-
   value:
@@ -97,7 +100,10 @@
     - build-container
     taskRef:
       kind: Task
-      name: acs-image-scan
+      name: acs-image-scan      
+    workspaces:
+      - name: repository
+        workspace: workspace
 - op: add
   path: /spec/tasks/-
   value:
@@ -114,6 +120,9 @@
     taskRef:
       kind: Task
       name: acs-deploy-check
+    workspaces:
+      - name: repository
+        workspace: workspace
 - op: add
   path: /spec/tasks/-
   value:
