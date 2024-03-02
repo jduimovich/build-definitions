@@ -31,9 +31,7 @@ spec:
       description: Summary of the roxctl scan
     - name: TEST_OUTPUT
       description: Result of the `roxctl deploy check` check
-  volumes:
-    - name: repository
-      emptyDir: {}
+  volumes: 
     - name: rox-secret
       secret:
         secretName: $(params.rox-secret-name)
@@ -171,3 +169,6 @@ spec:
       script: |
         #!/usr/bin/env bash 
         cat /workspace/repository/output-check
+    workspaces:
+    - description: The git repo will be cloned onto the volume backing this Workspace.
+      name: repository
